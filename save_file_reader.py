@@ -82,6 +82,13 @@ class Province:
                     self.religion.append((entry[0], entry[2]))
 
 
+def get_meta_data(meta_lines):
+    meta_data = ["1444.11.11"]
+    for line in meta_lines:
+        if "date=" in line:
+            meta_data[0] = line.replace("date=", "")
+            break
+    return meta_data
 
 def get_province_data(filename):
     global start_date, province_types, nation_info_locations
@@ -104,6 +111,7 @@ def get_province_data(filename):
                 os.remove("gamestate")
                 os.remove("meta")
                 os.remove("ai")
+                meta_data = get_meta_data(meta_file_lines)
                 try:
                     os.remove("rnw.zip")  # Handling random new worlds
                 except:
@@ -112,6 +120,8 @@ def get_province_data(filename):
                 return None
         except Exception as exception:
             return None
+    else:
+        meta_data = get_meta_data(file_lines)
     province_types = {}
     with open(CLIMATE_DEFS_PATH, 'r') as wasteland_check:
         province_types_check_wasteland = wasteland_check.readlines()
@@ -189,4 +199,4 @@ def get_province_data(filename):
                     elif (check_days < days and common_functions.date_to_days(province.owner[e+1]) > check_days):
                         provinces[p].owner = provinces[p].owner[:e+1] + [(formed_nations[key][1], formed_nations[key][0])] + provinces[p].owner[e+1:]
 
-    return provinces, colonial_colors
+    return provinces, colonial_colors, meta_data

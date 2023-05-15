@@ -55,3 +55,29 @@ def is_created_nation(tag: str) -> bool:
     if re.fullmatch(r"([CDFKT])\d\d", tag) is not None:
         return True
     return False
+
+
+def parse_interval(argument: str) -> int | None:
+    if argument == "w" or argument == "week":
+        return 7
+    elif argument == "m" or argument == "month":
+        return 30 # Should make this better honestly, not all months are 30 days
+    elif argument == "y" or argument == "year":
+        return 365
+
+    if re.search(r"w$", argument) is not None or re.search(r"week$", argument) is not None:
+        return int(argument.replace("week", "").replace("w", "")) * 7
+    elif re.search(r"m$", argument) is not None or re.search(r"month$", argument) is not None:
+        return int(argument.replace("month", "").replace("m", "")) * 30 # Same here
+    elif re.search(r"y$", argument) is not None or re.search(r"year$", argument) is not None:
+        return int(argument.replace("year", "").replace("y", "")) * 365
+    else:
+        number_string = ""
+        for char in argument:
+            try:
+                temp_int = int(char)
+                number_string += char
+            except:
+                break
+        return int(number_string) # Days
+

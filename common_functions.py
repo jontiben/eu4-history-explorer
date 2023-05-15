@@ -1,6 +1,7 @@
 import defines
 import os
 import codecs
+from datetime import datetime
 
 def date_conversion(date: str) -> str:
     # Takes a normally-formatted date string and turns it into
@@ -28,10 +29,31 @@ def date_to_days(date: str) -> int:
                   30]  # January-November, don't need to add December because it's the last month
         date = date.split('.')
         year, month, day = int(date[0]), int(date[1]), int(date[2])
-        return (year - 1) * 365 + sum(months[:month]) + day - 1
+        return (year - 1) * 365 + sum(months[:month]) + day
     except:
         return 0
 
+
+def days_to_date(days: int) -> str:
+    if type(days) == type(None):
+        return 0
+    try:
+        year_comp = int(days / 365) + 1
+        year_remainder = days % 365
+        months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
+          30, 9999]  # January-November, don't need to add December because it's the last month
+        month_total = 0
+        month_comp = 0
+        for m, month in enumerate(months):
+            month_total += month
+            if month_total >= year_remainder:
+                month_comp = m + 1
+                month_total = sum(months[:m])
+                break
+        day_comp = year_remainder - month_total
+        return f"{year_comp}.{month_comp}.{day_comp}"
+    except:
+        return 0    
 
 
 def contemporary_event(date: str, events: list) -> tuple:
@@ -42,7 +64,7 @@ def contemporary_event(date: str, events: list) -> tuple:
     days = date_to_days(date)
     output_event = events[0]
     for event in events:
-        check_days = date_to_days(event[0])
+        check_days = date_to_days(event[0]) - 1
         if check_days <= days:
             output_event = event
         else:
@@ -122,6 +144,8 @@ def get_country_color(name):
 
 
 def has_changed(previous_days, days, province, mode):
+    if previous_days == 0:
+        return True
     if mode == "owner":
         events_list = province.owner
     elif mode == "controller":
@@ -137,3 +161,7 @@ def has_changed(previous_days, days, province, mode):
         if (check_days <= days and check_days > previous_days) or (check_days >= days and check_days < previous_days):
             return True
     return False
+
+
+def log_out(text) -> None:
+    print(f"[{datetime.now().time()}] {text}")

@@ -9,7 +9,7 @@ culture_colors = {}
 previous_days = 0
 out_map = Image.new("RGB", (PROVINCE_MAP_WIDTH, PROVINCE_MAP_HEIGHT))
 
-def render_to_date(date, province_mapping, provinces, colonial_colors, mode="owner"):
+def render_to_date(date, province_mapping, provinces, colonial_colors, mode="owner", show_date=True):
     global previous_days, out_map
     days = date_to_days(date)
     for province in provinces:
