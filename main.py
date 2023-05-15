@@ -37,6 +37,7 @@ def eu4_map_generator(path, args):
     mode = "owner"
     dates = []
     changed_interval = False
+    changed_mode = False
     for arg in args:
         arg = arg.lower()
         # Handling arguments
@@ -54,6 +55,12 @@ def eu4_map_generator(path, args):
             temp_mode = arg.replace("mode=", "")
             if temp_mode in VALID_MODE_INPUTS:
                 mode = VALID_MODE_INPUTS[temp_mode]
+                changed_mode = True
+        elif "mapmode=" in arg:
+            temp_mode = arg.replace("mapmode=", "")
+            if temp_mode in VALID_MODE_INPUTS:
+                mode = VALID_MODE_INPUTS[temp_mode]
+                changed_mode = True
         elif text_handling_functions.is_date(arg):
             dates.append(arg)
     single_shot = True
@@ -65,16 +72,23 @@ def eu4_map_generator(path, args):
     if single_shot:
         end_date = "99999.12.31"
     log_out("Rendering maps with the following options:")
+    if changed_mode:
+        print(f"    mapmode: {mode}")
+    else:
+        print(f"    mapmode: {mode} (default)")
+
     print(f"    start date: {common_functions.date_conversion(start_date)}")
-    if not single_shot:
+    if single_shot:
+        print(f"    single-shot mode, one output image")
+    else:
         print(f"    end date: {common_functions.date_conversion(end_date)}")
         if changed_interval:
             print(f"    interval: {temp_interval} -> {interval} days")
         else:
             print(f"    interval: {interval} (default)")
-    else:
-        print(f"    single-shot mode, one output image")
+    image_count = 0
     for i in range(common_functions.date_to_days(start_date), common_functions.date_to_days(end_date) + interval, interval):
+        image_count += 1
         next_date = common_functions.days_to_date(i)
         log_out(f"  Rendering {next_date}...")
         if text_handling_functions.is_date(next_date):
@@ -88,6 +102,7 @@ def eu4_map_generator(path, args):
             out_map.save(f"saved_maps/map_{mode}_{formatted_date}.png")
         if single_shot:
             break
+    log_out(f"Map generation complete, all {image_count} images saved to the saved_maps directory.")
 
 
 if __name__ == "__main__":
