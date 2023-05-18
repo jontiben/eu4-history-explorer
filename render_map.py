@@ -37,6 +37,14 @@ def render_to_date(date, province_mapping, provinces, colonial_colors, mode="own
                         else:
                             owner_colors[current_owner] = get_country_color(get_full_country_name(current_owner))
                     color = owner_colors[current_owner]
+                elif mode == "controller":
+                    current_owner = contemporary_event(date, province.controller)[1]
+                    if current_owner not in owner_colors.keys():
+                        if current_owner in colonial_colors.keys():
+                            owner_colors[current_owner] = colonial_colors[current_owner]
+                        else:
+                            owner_colors[current_owner] = get_country_color(get_full_country_name(current_owner))
+                    color = owner_colors[current_owner]                    
                 elif mode == "religion":
                     current_owner = contemporary_event(date, province.religion)[1]
                     if current_owner not in religion_colors.keys():

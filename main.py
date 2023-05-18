@@ -41,11 +41,7 @@ def eu4_map_generator(path, args):
     for arg in args:
         arg = arg.lower()
         # Handling arguments
-        if "mode=" in arg:
-            temp_mode = arg.replace("mode=","")
-            if temp_mode in VALID_MODES:
-                mode = temp_mode
-        elif "interval=" in arg:
+        if "interval=" in arg:
             temp_interval = arg.replace("interval=", "")
             interval_check = text_handling_functions.parse_interval(temp_interval)
             if interval_check is not None:

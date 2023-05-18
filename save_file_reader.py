@@ -39,7 +39,7 @@ class Province:
                 for s, sub_line in enumerate(history_lines):
                     if self.type == "land":
                         #if get_tag(sub_line) == "owner":
-                        #    self.original_owner = get_data(sub_line)
+                        #    self.original_owner = get_data(sub_line) 
                         #elif get_tag(sub_line) == "controller":
                         #    self.original_controller = get_data(sub_line)
                         if is_date(sub_line):
@@ -56,8 +56,6 @@ class Province:
                 break
         if history_lines == []:
             return None
-        if self.original_controller == "None":
-            self.original_controller = self.original_owner
         self.serialize_data()
 
     def serialize_data(self):
@@ -80,6 +78,8 @@ class Province:
             elif entry[1] == "religion":
                 if entry[2] != self.religion[-1][1]: # Prevents duplicate entries
                     self.religion.append((entry[0], entry[2]))
+        if len(self.owner) > 1:
+            self.controller = [self.controller[0]] + [self.owner[1]] + self.controller[1:]
 
 
 def get_meta_data(meta_lines):
@@ -196,7 +196,9 @@ def get_province_data(filename):
                     check_days = common_functions.date_to_days(event[0])
                     if e == len(province.owner) - 1:
                         provinces[p].owner = provinces[p].owner + [(formed_nations[key][1], formed_nations[key][0])]
+                        provinces[p].controller = provinces[p].controller + [(formed_nations[key][1], formed_nations[key][0])]
                     elif (check_days < days and common_functions.date_to_days(province.owner[e+1]) > check_days):
                         provinces[p].owner = provinces[p].owner[:e+1] + [(formed_nations[key][1], formed_nations[key][0])] + provinces[p].owner[e+1:]
+                        provinces[p].controller = provinces[p].controller[:e+1] + [(formed_nations[key][1], formed_nations[key][0])] + provinces[p].controller[e+1:]
 
     return provinces, colonial_colors, meta_data
