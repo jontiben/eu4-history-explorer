@@ -23,6 +23,8 @@ C_WASTELAND = (0, 0, 0)
 C_OCEAN = (160, 220, 240)
 C_WHITE = (255, 255, 255)
 
+HASHED_LINE_SPACING = 6
+
 HELP_TERMS = ["h", "?", "h", "he", "hel", "help", "??", "???",
 "-h", "-?", "-h", "-he", "-hel", "-help", "-??", "-???",
 "--h", "--?", "--h", "--he", "--hel", "--help", "--??", "--???",]
@@ -41,6 +43,8 @@ uncompressed) and create maps of the file's history at specified points.
 It currently supports the following mapmodes:
 	Political (colored according to ingame color)
 	Control (randomly assigned map colors)
+	Combined (colored according to ingame color, combination of political
+		and control)
 	Religious (randomly assigned map colors)
 	Cultural (randomly assigned map colors)
 
@@ -48,8 +52,8 @@ Flags:
 	-nd			Generates map images without the date in the bottom-left
 
 Options:
-	mode=		Mapmode (accepts political, control, religious, or
-				cultural, default is political)
+	mode=		Mapmode (accepts political, control, combined, religious,
+				or cultural, default is political)
 	interval=	Time interval between maps (default 365 days)
 				Give it a number followed by, optionally, an interval
 				size: w or week for 7 days, m or month for 30, and y
@@ -76,7 +80,8 @@ VALID_MODE_INPUTS = {
 	"culture": "culture",
 	"cultural": "culture",
 	"religious": "religion",
-	"religion": "religion"
+	"religion": "religion",
+	"combined": "combined" # Political + Lines for control
 }
-VALID_MODES = ["owner", "controller", "culture", "religion"]
+VALID_MODES = ["owner", "controller", "culture", "religion", "combined"]
 

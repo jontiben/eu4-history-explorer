@@ -25,7 +25,7 @@ interval = 365
 def eu4_map_generator(path, args):
     log_out(f"Targeting {path}")
     #path = path.replace("\\", "\\\\")
-    log_out("Reading savefile")
+    log_out("Reading savefile...")
     reader_out = save_file_reader.get_province_data(path)
     provinces = reader_out[0]
     colonial_colors = reader_out[1]

@@ -154,6 +154,8 @@ def has_changed(previous_days, days, province, mode):
         events_list = province.culture
     elif mode == "religion":
         events_list = province.religion
+    elif mode == "combined":
+        events_list = province.controller
     if len(events_list) == 0:
         return False
     for event in events_list:

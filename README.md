@@ -13,7 +13,8 @@ Example: `ehe "C:\Users\user name\Documents\Paradox Interactive\Europa Universal
 ehe will read an EU4 savefile (ending in .eu4, non-ironman, compressed or uncompressed) and create maps of the file's history at specified points.
 It currently supports the following mapmodes:
 - Political (colored according to ingame color)
-- Control (randomly assigned map colors)
+- Control (colored according to ingame color)
+- Combined (colored according to ingame color, combination of political and control)
 - Religious (randomly assigned map colors)
 - Cultural (randomly assigned map colors)
 
@@ -23,7 +24,7 @@ Flags:
 
 Options:
 
-        mode=           Mapmode (accepts political, control, religious, or
+        mode=           Mapmode (accepts political, control, combined, religious, or
                                 cultural, default is political)
         interval=       Time interval between maps (default 365 days)
                                 Give it a number followed by, optionally, an interval

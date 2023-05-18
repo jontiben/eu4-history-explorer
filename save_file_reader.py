@@ -68,9 +68,7 @@ class Province:
         self.culture = [(start_date, self.original_culture)]
         self.religion = [(start_date, self.original_religion)]
         for entry in self.history:
-            if entry[1] == "owner":
-                self.owner.append((entry[0], entry[2]))
-            elif entry[1] == "controller":
+            if entry[1] == "controller":
                 self.controller.append((entry[0], entry[2]))
             elif entry[1] == "culture":
                 if entry[2] != self.culture[-1][1]:
@@ -78,6 +76,10 @@ class Province:
             elif entry[1] == "religion":
                 if entry[2] != self.religion[-1][1]: # Prevents duplicate entries
                     self.religion.append((entry[0], entry[2]))
+            elif entry[1] == "owner":
+                self.owner.append((entry[0], entry[2]))
+                if (entry[0], entry[2]) not in self.controller:
+                    self.controller.append((entry[0], entry[2]))
         if len(self.owner) > 1:
             self.controller = [self.controller[0]] + [self.owner[1]] + self.controller[1:]
 

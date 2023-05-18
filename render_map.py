@@ -29,7 +29,7 @@ def render_to_date(date, province_mapping, provinces, colonial_colors, mode="own
                     new_color = True
                 color = C_WASTELAND
             elif changed:
-                if mode == "owner":
+                if mode == "owner" or mode == "combined":
                     current_owner = contemporary_event(date, province.owner)[1]
                     if current_owner not in owner_colors.keys():
                         if current_owner in colonial_colors.keys():
@@ -55,9 +55,25 @@ def render_to_date(date, province_mapping, provinces, colonial_colors, mode="own
                     if current_owner not in culture_colors.keys():
                         culture_colors[current_owner] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
                     color = culture_colors[current_owner]
+                if mode == "combined":
+                    current_owner = contemporary_event(date, province.controller)[1]
+                    if current_owner not in owner_colors.keys():
+                        if current_owner in colonial_colors.keys():
+                            owner_colors[current_owner] = colonial_colors[current_owner]
+                        else:
+                            owner_colors[current_owner] = get_country_color(get_full_country_name(current_owner))
+                    secondary_color = owner_colors[current_owner]                          
+
             if new_color:
                 pixels = province_mapping[province.id]
                 for pixel in pixels:
-                    out_map.putpixel(pixel, color)
+                    if mode == "combined" and province.type != "sea" and province.type != "wasteland":
+                        pixel_distance = pixel[0] * 2 ** 0.5 - pixel[1] * 2 ** 0.5
+                        if abs(pixel_distance) % HASHED_LINE_SPACING < 1.45:
+                            out_map.putpixel(pixel, secondary_color)
+                        else:
+                           out_map.putpixel(pixel, color) 
+                    else:
+                        out_map.putpixel(pixel, color)
     previous_days = days
     return out_map
