@@ -45,6 +45,12 @@ Running either `mp4maker.py` or `gifmaker.py` will generate an mp4 or gif video 
 
 Run ehe with no arguments, or with an argument that seems like it should generate a help page to see a help page.
 
+Known Issues:
+
+The un-occupation of a province through the influence of a nearby fort is not recorded in the province history. There's nothing I can really do about that.
+
+Other:
+
 The ehe is developed under the MIT license. It's written entirely in Python, using PIL for image generation and imageio for video generation.
 
 For help, questions, comments, or suggestions please contact either jontiben on Github or jontiben#7855 on Discord.

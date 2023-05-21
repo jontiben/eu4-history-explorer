@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-import sys
+import sys, os
 
 import save_file_reader
 import render_map
@@ -10,9 +10,8 @@ import common_functions
 from common_functions import log_out
 
 
-start_date = None
 end_date = None
-interval = 365
+
 
 # ARGUMENTS:
 # -nd = no date
@@ -32,6 +31,7 @@ def eu4_map_generator(path, args):
     meta_data = reader_out[2]
     start_date = meta_data[0]
     end_date = meta_data[0]
+    interval = 365
     log_out("Mapping pixels...")
     province_pixel_mapping = province_mapping.get_pixel_mappings()
     mode = "owner"
@@ -83,6 +83,7 @@ def eu4_map_generator(path, args):
         else:
             print(f"    interval: {interval} (default)")
     image_count = 0
+    savefile_name = os.path.basename(path).split("\\")[-1].replace(".eu4","").replace(".","")
     for i in range(common_functions.date_to_days(start_date), common_functions.date_to_days(end_date) + interval, interval):
         image_count += 1
         next_date = common_functions.days_to_date(i)
@@ -95,7 +96,7 @@ def eu4_map_generator(path, args):
                 draw_map.text((20, PROVINCE_MAP_HEIGHT - 20), f"Date: {next_date}", fill=(0, 0, 0))
             #out_map.show()
             formatted_date = next_date.replace(".", "_")
-            out_map.save(f"saved_maps/map_{mode}_{formatted_date}.png")
+            out_map.save(f"saved_maps/map_{mode}_{savefile_name}_{formatted_date}.png")
         if single_shot:
             break
     log_out(f"Map generation complete, all {image_count} images saved to the saved_maps directory.")
