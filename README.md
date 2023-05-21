@@ -20,7 +20,7 @@ It currently supports the following mapmodes:
 
 Flags:
 
-        -nd                     Generates map images without the date in the bottom-left
+        -nd             Generates map images without the date in the bottom-left
 
 Options:
 
@@ -30,7 +30,7 @@ Options:
                                 Give it a number followed by, optionally, an interval
                                 size: w or week for 7 days, m or month for 30, and y
                                 or year for 365. If no interval size is given it will
-                                default to days. the argument "35" will be interpreted
+                                default to days. The argument "35" will be interpreted
                                 as "35 days," the argument "6m" will be interpreted as
                                 180 days, "2year" will be interpreted as "730 days," etc.
 
@@ -46,3 +46,5 @@ Running either `mp4maker.py` or `gifmaker.py` will generate an mp4 or gif video 
 Run ehe with no arguments, or with an argument that seems like it should generate a help page to see a help page.
 
 The ehe is developed under the MIT license. It's written entirely in Python, using PIL for image generation and imageio for video generation.
+
+For help, questions, comments, or suggestions please contact either jontiben on Github or jontiben#7855 on Discord.
